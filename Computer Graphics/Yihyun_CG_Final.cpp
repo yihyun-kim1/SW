@@ -19,7 +19,7 @@ using namespace std;
 
 static bool spinning = true;
 static GLfloat currentAngleOfRotation = 0.0;
-//ÀÌ°Å ´Ù Å¥ºê È¸Àü, examples ºÏ¸¶Å©¿¡¼­ spinning square ÄÚµå Âü°í!
+//ì´ê±° ë‹¤ íë¸Œ íšŒì „, examples ë¶ë§ˆí¬ì—ì„œ spinning square ì½”ë“œ ì°¸ê³ !
 
 typedef struct {
     float x;
@@ -55,19 +55,19 @@ GLfloat CYAN[] = { 0, 1, 1 };
 GLfloat lightCYAN[] = { 0.8, 1, 1 };
 
 class Camera {
-    double theta;      // x, z À§Ä¡
-    double y;          // ÇöÀçÀÇ y À§Ä¡
-    double dTheta;     // Ä«¸Ş¶ó - ¿©·¯ ¹æÇâÀ¸·Î ¿òÁ÷ÀÌ±â À§ÇÑ Á¶Àı
-    double dy;         // Ä«¸Ş¶ó - »óÇÏ Á¶ÀıÀ» À§ÇÑ Á¶Àı
+    double theta;      // x, z ìœ„ì¹˜
+    double y;          // í˜„ì¬ì˜ y ìœ„ì¹˜
+    double dTheta;     // ì¹´ë©”ë¼ - ì—¬ëŸ¬ ë°©í–¥ìœ¼ë¡œ ì›€ì§ì´ê¸° ìœ„í•œ ì¡°ì ˆ
+    double dy;         // ì¹´ë©”ë¼ - ìƒí•˜ ì¡°ì ˆì„ ìœ„í•œ ì¡°ì ˆ
 public:
     Camera() : theta(0), y(3), dTheta(0.04), dy(0.2) {}
     double getX() { return 10 * cos(theta); }
     double getY() { return y; }
     double getZ() { return 10 * sin(theta); }
-    void moveRight() { theta += dTheta; } //Ä«¸Ş¶ó ¿ì·Î ÀÌµ¿
-    void moveLeft() { theta -= dTheta; } //Ä«¸Ş¶ó ÁÂ·Î ÀÌµ¿
-    void moveUp() { y += dy; } //Ä«¸Ş¶ó ³ôÀÌ Á¶Àı - »óÇâ
-    void moveDown() { if (y > dy) y -= dy; } //Ä«¸Ş¶ó ³ôÀÌ Á¶Àı - ÇÏÇâ
+    void moveRight() { theta += dTheta; } //ì¹´ë©”ë¼ ìš°ë¡œ ì´ë™
+    void moveLeft() { theta -= dTheta; } //ì¹´ë©”ë¼ ì¢Œë¡œ ì´ë™
+    void moveUp() { y += dy; } //ì¹´ë©”ë¼ ë†’ì´ ì¡°ì ˆ - ìƒí–¥
+    void moveDown() { if (y > dy) y -= dy; } //ì¹´ë©”ë¼ ë†’ì´ ì¡°ì ˆ - í•˜í–¥
 };
 
 class Ball {
@@ -105,7 +105,7 @@ public:
 // is 1 x 1.  One corner of the board is (0, 0) and the board stretches out
 // along positive x and positive z.  It rests on the xz plane.  I put a
 // spotlight at (4, 3, 7).
-// ¹Ù´Ú ¸¸µå´Â Å¬·¡½º ±¸Çö
+// ë°”ë‹¥ ë§Œë“œëŠ” í´ë˜ìŠ¤ êµ¬í˜„
 class CheckFloor {
     int displayListId;
     int width;
@@ -141,7 +141,7 @@ public:
     }
 };
 
-//Ä«¸Ş¶ó, ¹Ù´Ú, °ø -> ±Û·Î¹ú º¯¼ö·Î ¼±¾ğ
+//ì¹´ë©”ë¼, ë°”ë‹¥, ê³µ -> ê¸€ë¡œë²Œ ë³€ìˆ˜ë¡œ ì„ ì–¸
 CheckFloor checkfloor(8, 8);
 Camera camera;
 Ball balls[] = {
@@ -170,11 +170,11 @@ void MakeGL_Model(void)
 
     //  if (glIsList(1)) glDeleteLists(1, 1);
     //  glNewList(1, GL_COMPILE); glPushMatrix();
-        //ÀÖÀ¸¸é ¹Ù´ÚÀÌ¶û È£È¯ X
+        //ìˆìœ¼ë©´ ë°”ë‹¥ì´ë‘ í˜¸í™˜ X
 
     glRotatef(angle, 0.0, 1.0, 0.0);
     glScalef(0.01, 0.01, 0.01);
-    //¿ø·¡ °¢ °ª scalefactorÀÓ
+    //ì›ë˜ ê° ê°’ scalefactorì„
 
     for (i = 0; i < fnum; i++) {
         glBegin(GL_TRIANGLES);
@@ -193,17 +193,17 @@ void MakeGL_Model(void)
 void mouse(int button, int state, int x, int y) {
     if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
         glEnable(GL_CULL_FACE); glCullFace(GL_FRONT); glFrontFace(GL_CW);
-        //glcullface -> gl_backÀ¸·Î ÇÏ¸é Àü¸éÀÌ Á¦°ÅµÊ (GLÀº ¹İ½Ã°è¹æÇâÀ¸·Î ±×·ÁÁø°É Àü¸éÀ¸·ÎÇÏ±â¶§¹®) µû¶ó¼­ FRONT·Î ¼öÁ¤!
-    } //¿ŞÂÊ ¸¶¿ì½º ¹öÆ° ´©¸£¸é backface culling ÄÑÁö°Ô
+        //glcullface -> gl_backìœ¼ë¡œ í•˜ë©´ ì „ë©´ì´ ì œê±°ë¨ (GLì€ ë°˜ì‹œê³„ë°©í–¥ìœ¼ë¡œ ê·¸ë ¤ì§„ê±¸ ì „ë©´ìœ¼ë¡œí•˜ê¸°ë•Œë¬¸) ë”°ë¼ì„œ FRONTë¡œ ìˆ˜ì •!
+    } //ì™¼ìª½ ë§ˆìš°ìŠ¤ ë²„íŠ¼ ëˆ„ë¥´ë©´ backface culling ì¼œì§€ê²Œ
     if (button == GLUT_LEFT_BUTTON && state == GLUT_UP) {
         glDisable(GL_CULL_FACE);
-    } //¹öÆ° ¶¼¸é backface culling ²¨Áö°Ô
+    } //ë²„íŠ¼ ë–¼ë©´ backface culling êº¼ì§€ê²Œ
     if ((button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN)) {
-        //¿À¸¥ÂÊ ¹öÆ° ´©¸£¸é FLAT shading
+        //ì˜¤ë¥¸ìª½ ë²„íŠ¼ ëˆ„ë¥´ë©´ FLAT shading
         glShadeModel(GL_FLAT);
     }
     if ((button == GLUT_RIGHT_BUTTON && state == GLUT_UP)) {
-        //¹öÆ° ¾È ´©¸£°Å³ª ¿À¸¥ÂÊ ¹öÆ° ¶¼¸é SMOOTH shading
+        //ë²„íŠ¼ ì•ˆ ëˆ„ë¥´ê±°ë‚˜ ì˜¤ë¥¸ìª½ ë²„íŠ¼ ë–¼ë©´ SMOOTH shading
         glShadeModel(GL_SMOOTH);
     }
 }
@@ -246,15 +246,15 @@ void display(void) {
     glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, CYAN);
     glutSolidCone(1.0, 2.0, 70, 12);
 
-    //Make Square and È¸Àü½ÃÅ°±â
+    //Make Square and íšŒì „ì‹œí‚¤ê¸°
     glPushMatrix();
     glTranslatef(-2, 3, 1);
     glRotatef(currentAngleOfRotation, 0.0, 0.0, 1.0);
     glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, Lemon);
     glutSolidCube(1.2);
-    //solidÀÎµ¥ ¿Ö ²Ë ¾ÈÂ÷Áö? Âù°Ç°¡
+    //solidì¸ë° ì™œ ê½‰ ì•ˆì°¨ì§€? ì°¬ê±´ê°€
     glPopMatrix();
-    MakeGL_Model(); // ¿Ö ÀÌ ÁÙ¸¸ ÀÖÀ¸¸é ¹Ù´ÚÀÌ¶û È£È¯ÀÌ ¾ÈµÇÁö?
+    MakeGL_Model(); // ì™œ ì´ ì¤„ë§Œ ìˆìœ¼ë©´ ë°”ë‹¥ì´ë‘ í˜¸í™˜ì´ ì•ˆë˜ì§€?
 
     glFlush();
     glutSwapBuffers();
@@ -273,14 +273,14 @@ void reshape(GLint w, GLint h) {
 
 // Requests to draw the next frame.
 void timer(int v) {
-    glutPostRedisplay(); //À©µµ¿ì¸¦ ´Ù½Ã ±×¸²
-    glutTimerFunc(1000 / 60, timer, v); //´ÙÀ½ Å¸ÀÌ¸Ó ÀÌº¥Æ®´Â 1000/60ms ÈÄ È£ÃâµÊ
+    glutPostRedisplay(); //ìœˆë„ìš°ë¥¼ ë‹¤ì‹œ ê·¸ë¦¼
+    glutTimerFunc(1000 / 60, timer, v); //ë‹¤ìŒ íƒ€ì´ë¨¸ ì´ë²¤íŠ¸ëŠ” 1000/60ms í›„ í˜¸ì¶œë¨
 
     if (spinning) {
         currentAngleOfRotation += 1.0;
         if (currentAngleOfRotation > 360.0) {
             currentAngleOfRotation -= 360.0;
-        } //Å¥ºê È¸ÀüÇÏ´Â ÄÚµå !
+        } //íë¸Œ íšŒì „í•˜ëŠ” ì½”ë“œ !
 
         glutPostRedisplay();
     }
